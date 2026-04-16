@@ -10,10 +10,10 @@ def registro_solicitud(request):
             return redirect('solicitudes:confirmacion', pk=solicitud.pk)
     else:
         form = SolicitudForm()
-    return render(request, 'solicitudes/registro.html', {'form': form})
+    return render(request, 'registro.html', {'form': form})
 
 
 def confirmacion_solicitud(request, pk):
     from .models import Solicitud
     solicitud = Solicitud.objects.get(pk=pk)
-    return render(request, 'solicitudes/confirmacion.html', {'solicitud': solicitud})
+    return render(request, 'confirmacion.html', {'solicitud': solicitud})
