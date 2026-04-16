@@ -7,8 +7,8 @@ def asistencia_create(request):
     if request.method == 'POST':
         form = AsistenciaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request, 'asistencia_success.html')
+            asistencia = form.save()  # ← guarda y captura el objeto
+            return render(request, 'asistencia_success.html', {'asistencia': asistencia})
     else:
         form = AsistenciaForm()
 
