@@ -5,5 +5,5 @@ app_name = 'solicitudes'
 
 urlpatterns = [
     path('registro/', views.registro_solicitud, name='registro'),
-    path('confirmacion/', views.confirmacion_solicitud, name='confirmacion'),
+    path('confirmacion/<int:pk>/', views.confirmacion_solicitud, name='confirmacion'),
 ]
