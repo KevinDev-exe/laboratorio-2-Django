@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Asistencia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f4ff;
+      --white: #ffffff;
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-soft: #eef2ff;
+      --secondary: #ec4899;
+      --secondary-soft: #fdf2f8;
+      --text: #1e1b4b;
+      --text-muted: #6b7280;
+      --border: #e0e7ff;
+      --error: #ef4444;
+      --error-soft: #fef2f2;
+      --success: #10b981;
+      --shadow-lg: 0 8px 40px rgba(99,102,241,0.15);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 20px;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(99,102,241,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgba(236,72,153,0.10) 0%, transparent 50%);
+    }
+
+    .page-wrapper { max-width: 720px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .page-header { margin-bottom: 32px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 14px;
+      background: var(--primary-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle { font-size: 0.92rem; color: var(--text-muted); font-weight: 400; }
+
+    /* ── Card ── */
+    .form-card {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .card-top-bar {
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--secondary));
+    }
+
+    .card-body { padding: 40px; }
+
+    /* ── Grid de 2 columnas ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .span-2 { grid-column: span 2; }
+
+    /* ── Field group ── */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.03em;
+    }
+
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .field-group input::placeholder,
+    .field-group textarea::placeholder { color: #c4c9d4; }
+
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--primary-light);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.10);
+    }
+
+    .field-group textarea { resize: vertical; min-height: 100px; }
+
+    .field-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236366f1' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-color: var(--bg);
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    /* ── Checkbox personalizado ── */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .checkbox-group:hover {
+      border-color: var(--primary-light);
+      background: var(--white);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0;
+      padding: 0;
+      border-radius: 6px;
+    }
+
+    .checkbox-group .check-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    /* ── Error box ── */
+    .error-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--error-soft);
+      border: 1.5px solid #fecaca;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      font-size: 0.85rem;
+      color: var(--error);
+    }
+
+    .errorlist { list-style: none; margin-top: 4px; }
+    .errorlist li { font-size: 0.75rem; color: var(--error); }
+    .errorlist li::before { content: '⚠ '; }
+
+    /* ── Footer ── */
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 40px;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(to right, var(--primary-soft), var(--secondary-soft));
+    }
+
+    .footer-hint { font-size: 0.78rem; color: var(--text-muted); }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 16px rgba(99,102,241,0.30);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(99,102,241,0.40);
+    }
+
+    .btn-arrow { transition: transform 0.2s; }
+    .btn-submit:hover .btn-arrow { transform: translateX(4px); }
+
+    /* ── Responsive ── */
+    @media (max-width: 580px) {
+      body { padding: 28px 14px; }
+      .card-body { padding: 28px 20px; }
+      .card-footer { padding: 18px 20px; flex-direction: column; gap: 14px; align-items: stretch; }
+      .btn-submit { justify-content: center; }
+      h1 { font-size: 1.7rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .span-2 { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <div class="page-header">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Sistema de Asistencia
+      </div>
+      <h1>Registro de <span>Asistencia</span></h1>
+      <p class="subtitle">Complete el formulario para registrar su asistencia en el sistema.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="card-top-bar"></div>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="card-body">
+
+          {% if form.errors %}
+            <div class="error-box">
+              <span>⚠️</span>
+              <div><strong>Por favor corrija los siguientes errores:</strong><br>{{ form.non_field_errors }}</div>
+            </div>
+          {% endif %}
+
+          <div class="form-grid">
+
+            <!-- Fila 1: Nombre completo | Documento identidad -->
+            <div class="field-group">
+              <label for="{{ form.nombre_completo.id_for_label }}">{{ form.nombre_completo.label }}</label>
+              {{ form.nombre_completo }}
+              {% if form.nombre_completo.errors %}<ul class="errorlist">{% for e in form.nombre_completo.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.documento_identidad.id_for_label }}">{{ form.documento_identidad.label }}</label>
+              {{ form.documento_identidad }}
+              {% if form.documento_identidad.errors %}<ul class="errorlist">{% for e in form.documento_identidad.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <!-- Fila 2: Correo electrónico | Fecha asistencia -->
+            <div class="field-group">
+              <label for="{{ form.correo_electronico.id_for_label }}">{{ form.correo_electronico.label }}</label>
+              {{ form.correo_electronico }}
+              {% if form.correo_electronico.errors %}<ul class="errorlist">{% for e in form.correo_electronico.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.fecha_asistencia.id_for_label }}">{{ form.fecha_asistencia.label }}</label>
+              {{ form.fecha_asistencia }}
+              {% if form.fecha_asistencia.errors %}<ul class="errorlist">{% for e in form.fecha_asistencia.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <!-- Fila 3: Hora ingreso | Hora salida -->
+            <div class="field-group">
+              <label for="{{ form.hora_ingreso.id_for_label }}">{{ form.hora_ingreso.label }}</label>
+              {{ form.hora_ingreso }}
+              {% if form.hora_ingreso.errors %}<ul class="errorlist">{% for e in form.hora_ingreso.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.hora_salida.id_for_label }}">{{ form.hora_salida.label }}</label>
+              {{ form.hora_salida }}
+              {% if form.hora_salida.errors %}<ul class="errorlist">{% for e in form.hora_salida.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <!-- Fila 4: Presente (checkbox bonito) | campo extra si tienes -->
+            <div class="field-group">
+              <label>{{ form.presente.label }}</label>
+              <label class="checkbox-group">
+                {{ form.presente }}
+                <span class="check-label">Marcar como presente</span>
+              </label>
+              {% if form.presente.errors %}<ul class="errorlist">{% for e in form.presente.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <!-- Observaciones ocupa las 2 columnas -->
+            <div class="field-group span-2">
+              <label for="{{ form.observaciones.id_for_label }}">{{ form.observaciones.label }}</label>
+              {{ form.observaciones }}
+              {% if form.observaciones.errors %}<ul class="errorlist">{% for e in form.observaciones.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <span class="footer-hint">📋 Todos los campos son requeridos</span>
+          <button type="submit" class="btn-submit">
+            Guardar Asistencia
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>
