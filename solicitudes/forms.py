@@ -1,8 +1,7 @@
 from django import forms
 from .models import Solicitud
 
-
-class solicitudForm(forms.ModelForm):
+class SolicitudForm(forms.ModelForm):
     class Meta:
         model = Solicitud
-        fields = '_all_'
+        fields = '__all__'
