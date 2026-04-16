@@ -4,427 +4,305 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Solicitud</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0f1117;
-      --surface: #181b24;
-      --surface2: #1e2230;
-      --accent: #4f8ef7;
-      --accent2: #7c3aed;
-      --text: #e8eaf0;
-      --muted: #6b7280;
-      --border: #2a2f3e;
-      --error: #f87171;
-      --success: #34d399;
+      --bg: #f0f4ff; --white: #ffffff; --primary: #6366f1;
+      --primary-light: #818cf8; --primary-soft: #eef2ff;
+      --secondary: #ec4899; --secondary-soft: #fdf2f8;
+      --text: #1e1b4b; --text-muted: #6b7280; --border: #e0e7ff;
+      --error: #ef4444; --error-soft: #fef2f2;
+      --shadow-lg: 0 8px 40px rgba(99,102,241,0.15);
     }
-
     body {
-      font-family: 'Source Sans 3', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 48px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; padding: 48px 20px;
       background-image:
-        radial-gradient(ellipse at 0% 0%, rgba(79,142,247,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 100% 100%, rgba(124,58,237,0.08) 0%, transparent 60%);
+        radial-gradient(ellipse at 15% 20%, rgba(99,102,241,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgba(236,72,153,0.10) 0%, transparent 50%);
     }
-
-    .page-wrapper { max-width: 740px; margin: 0 auto; }
-
-    /* Header */
-    .page-header {
-      margin-bottom: 36px;
+    .page-wrapper { max-width: 720px; margin: 0 auto; }
+    .page-header { margin-bottom: 32px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 14px; background: var(--primary-soft);
+      border: 1px solid var(--border); border-radius: 999px;
+      font-size: 0.7rem; font-weight: 700; color: var(--primary);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px;
     }
-
-    .header-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      background: rgba(79,142,247,0.12);
-      border: 1px solid rgba(79,142,247,0.25);
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
+    .badge-dot {
+      width: 7px; height: 7px; background: var(--primary);
+      border-radius: 50%; animation: pulse 2s infinite;
     }
-
-    .header-tag::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
     }
-
     h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      font-weight: 900;
-      line-height: 1.1;
-      color: var(--text);
-      margin-bottom: 10px;
+      font-size: 2.2rem; font-weight: 800; color: var(--text);
+      line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.02em;
     }
-
-    .subtitle {
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-weight: 300;
+    h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
-    /* Form card */
+    .subtitle { font-size: 0.92rem; color: var(--text-muted); font-weight: 400; }
     .form-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
+      background: var(--white); border-radius: 24px;
+      box-shadow: var(--shadow-lg); overflow: hidden; border: 1px solid var(--border);
     }
-
-    .card-band {
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    .card-top-bar {
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--secondary));
     }
+    .card-body { padding: 40px; }
 
-    .card-inner { padding: 40px; }
-
-    /* Section */
+    /* Secciones */
     .section-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
+      display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
     }
-
     .section-num {
-      width: 28px;
-      height: 28px;
-      background: rgba(79,142,247,0.15);
-      border: 1px solid rgba(79,142,247,0.3);
+      width: 28px; height: 28px;
+      background: var(--primary-soft);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent);
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; color: var(--primary); flex-shrink: 0;
     }
-
     .section-title {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .section-sep {
+      border: none; border-top: 1px solid var(--border); margin: 28px 0;
     }
 
-    hr.section-sep {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 32px 0;
-    }
-
-    /* Fields */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-bottom: 0;
-    }
-
-    .form-grid.single { grid-template-columns: 1fr; }
+    /* Grid */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .span-2 { grid-column: span 2; }
-
-    .field-group { display: flex; flex-direction: column; gap: 7px; }
-
-    label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #9ca3af;
-      letter-spacing: 0.02em;
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-group label {
+      font-size: 0.8rem; font-weight: 600; color: var(--text); letter-spacing: 0.03em;
     }
-
-    .form-input,
-    .form-textarea,
-    .form-select,
-    .form-file {
-      width: 100%;
-      padding: 11px 15px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%; padding: 12px 16px; background: var(--bg);
+      border: 1.5px solid var(--border); border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem; color: var(--text); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
     }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder { color: #4b5563; }
-
-    .form-input:focus,
-    .form-textarea:focus,
-    .form-select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79,142,247,0.12);
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--primary-light); background: var(--white);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.10);
     }
-
-    .form-textarea { resize: vertical; min-height: 110px; }
-
-    .form-select {
+    .field-group textarea { resize: vertical; min-height: 110px; }
+    .field-group select {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 40px;
-      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236366f1' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      background-color: var(--bg); padding-right: 40px; cursor: pointer;
     }
-
-    .form-select option { background: var(--surface2); }
-
-    /* File input */
-    .file-wrapper {
-      position: relative;
+    .field-group input[type="file"] {
+      padding: 10px 14px; cursor: pointer; color: var(--text-muted);
     }
-
-    .form-file {
-      padding: 10px 15px;
-      cursor: pointer;
-      color: #9ca3af;
+    .field-group input[type="file"]::-webkit-file-upload-button {
+      background: var(--primary-soft); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--primary);
+      font-size: 0.8rem; font-weight: 600; padding: 5px 12px;
+      cursor: pointer; margin-right: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-
-    .form-file::-webkit-file-upload-button {
-      background: rgba(79,142,247,0.15);
-      border: 1px solid rgba(79,142,247,0.3);
-      border-radius: 6px;
-      color: var(--accent);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      cursor: pointer;
-      margin-right: 12px;
-      font-family: 'Source Sans 3', sans-serif;
+    .errorlist { list-style: none; margin-top: 4px; }
+    .errorlist li { font-size: 0.75rem; color: var(--error); }
+    .errorlist li::before { content: 'x '; }
+    .error-box {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--error-soft); border: 1.5px solid #fecaca;
+      border-radius: 14px; padding: 16px 18px; margin-bottom: 24px;
+      font-size: 0.85rem; color: var(--error);
     }
-
-    /* Errors */
-    .errorlist { list-style: none; margin-top: 5px; }
-
-    .errorlist li {
-      font-size: 0.78rem;
-      color: var(--error);
-      display: flex;
-      align-items: center;
-      gap: 5px;
+    .card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 40px; border-top: 1px solid var(--border);
+      background: linear-gradient(to right, var(--primary-soft), var(--secondary-soft));
     }
-
-    .errorlist li::before { content: '⚠'; }
-
-    /* Type cards */
-    .tipo-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    /* Submit */
-    .form-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 28px 40px;
-      border-top: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .footer-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .footer-note span { color: var(--error); }
-
-    .footer-actions { display: flex; gap: 12px; }
-
+    .footer-hint { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-actions { display: flex; gap: 10px; }
     .btn-reset {
-      padding: 11px 22px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.88rem;
-      color: var(--muted);
-      cursor: pointer;
+      padding: 11px 20px; background: transparent;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.88rem; color: var(--text-muted); cursor: pointer;
       transition: all 0.2s;
     }
-
-    .btn-reset:hover { border-color: var(--muted); color: var(--text); }
-
+    .btn-reset:hover { border-color: var(--primary-light); color: var(--text); }
     .btn-submit {
-      padding: 11px 28px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border: none;
-      border-radius: 10px;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: white;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none; border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.92rem; font-weight: 700; color: white;
+      cursor: pointer; transition: all 0.25s;
+      box-shadow: 0 4px 16px rgba(99,102,241,0.30);
     }
-
-    .btn-submit:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(79,142,247,0.3);
-    }
-
-    @media (max-width: 600px) {
-      .card-inner { padding: 24px 20px; }
-      .form-footer { padding: 20px; flex-direction: column; gap: 16px; align-items: stretch; }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(99,102,241,0.40); }
+    .btn-arrow { transition: transform 0.2s; }
+    .btn-submit:hover .btn-arrow { transform: translateX(4px); }
+    @media (max-width: 580px) {
+      body { padding: 28px 14px; }
+      .card-body { padding: 28px 20px; }
+      .card-footer { padding: 18px 20px; flex-direction: column; gap: 14px; align-items: stretch; }
       .footer-actions { flex-direction: column; }
+      .btn-submit { justify-content: center; }
+      h1 { font-size: 1.7rem; }
       .form-grid { grid-template-columns: 1fr; }
       .span-2 { grid-column: span 1; }
-      .tipo-grid { grid-template-columns: 1fr 1fr; }
-      h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
-  <div class="page-wrapper">
+<div class="page-wrapper">
 
-    <div class="page-header">
-      <div class="header-tag">Sistema de Solicitudes</div>
-      <h1>Formulario de<br>Solicitud</h1>
-      <p class="subtitle">Diligencie el formulario para radicar su solicitud en el sistema institucional</p>
-    </div>
+  <div class="page-header">
+    <div class="badge"><span class="badge-dot"></span> Sistema de Solicitudes</div>
+    <h1>Formulario de <span>Solicitud</span></h1>
+    <p class="subtitle">Diligencie el formulario para radicar su solicitud en el sistema institucional.</p>
+  </div>
 
-    <div class="form-card">
-      <div class="card-band"></div>
+  <div class="form-card">
+    <div class="card-top-bar"></div>
 
-      <form method="POST" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
 
-        <div class="card-inner">
+      <div class="card-body">
 
-          <!-- Sección 1: Datos personales -->
-          <div class="section-header">
-            <div class="section-num">1</div>
-            <div class="section-title">Datos del solicitante</div>
-          </div>
+        {% if form.errors %}
+        <div class="error-box">
+          <span>⚠️</span>
+          <div><strong>Corrija los errores:</strong> {{ form.non_field_errors }}</div>
+        </div>
+        {% endif %}
 
-          <div class="form-grid">
-            <div class="field-group span-2">
-              <label for="{{ form.nombre_solicitante.id_for_label }}">{{ form.nombre_solicitante.label }}</label>
-              {{ form.nombre_solicitante }}
-              {% if form.nombre_solicitante.errors %}
-                <ul class="errorlist">{% for e in form.nombre_solicitante.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group">
-              <label for="{{ form.documento_identidad.id_for_label }}">{{ form.documento_identidad.label }}</label>
-              {{ form.documento_identidad }}
-              {% if form.documento_identidad.errors %}
-                <ul class="errorlist">{% for e in form.documento_identidad.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group">
-              <label for="{{ form.correo_electronico.id_for_label }}">{{ form.correo_electronico.label }}</label>
-              {{ form.correo_electronico }}
-              {% if form.correo_electronico.errors %}
-                <ul class="errorlist">{% for e in form.correo_electronico.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group">
-              <label for="{{ form.telefono_contacto.id_for_label }}">{{ form.telefono_contacto.label }}</label>
-              {{ form.telefono_contacto }}
-              {% if form.telefono_contacto.errors %}
-                <ul class="errorlist">{% for e in form.telefono_contacto.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group">
-              <label for="{{ form.fecha_solicitud.id_for_label }}">{{ form.fecha_solicitud.label }}</label>
-              {{ form.fecha_solicitud }}
-              {% if form.fecha_solicitud.errors %}
-                <ul class="errorlist">{% for e in form.fecha_solicitud.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-          </div>
-
-          <hr class="section-sep">
-
-          <!-- Sección 2: Detalle de la solicitud -->
-          <div class="section-header">
-            <div class="section-num">2</div>
-            <div class="section-title">Detalle de la solicitud</div>
-          </div>
-
-          <div class="form-grid">
-            <div class="field-group">
-              <label for="{{ form.tipo_solicitud.id_for_label }}">{{ form.tipo_solicitud.label }}</label>
-              {{ form.tipo_solicitud }}
-              {% if form.tipo_solicitud.errors %}
-                <ul class="errorlist">{% for e in form.tipo_solicitud.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group">
-              <label for="{{ form.asunto.id_for_label }}">{{ form.asunto.label }}</label>
-              {{ form.asunto }}
-              {% if form.asunto.errors %}
-                <ul class="errorlist">{% for e in form.asunto.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group span-2">
-              <label for="{{ form.descripcion_detallada.id_for_label }}">{{ form.descripcion_detallada.label }}</label>
-              {{ form.descripcion_detallada }}
-              {% if form.descripcion_detallada.errors %}
-                <ul class="errorlist">{% for e in form.descripcion_detallada.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-
-            <div class="field-group span-2">
-              <label for="{{ form.archivo_adjunto.id_for_label }}">
-                {{ form.archivo_adjunto.label }}
-                <span style="color:var(--muted);font-weight:300"> — PDF, DOC, IMG</span>
-              </label>
-              {{ form.archivo_adjunto }}
-              {% if form.archivo_adjunto.errors %}
-                <ul class="errorlist">{% for e in form.archivo_adjunto.errors %}<li>{{ e }}</li>{% endfor %}</ul>
-              {% endif %}
-            </div>
-          </div>
-
-        </div><!-- card-inner -->
-
-        <div class="form-footer">
-          <p class="footer-note"><span>*</span> Todos los campos son obligatorios salvo el adjunto</p>
-          <div class="footer-actions">
-            <button type="reset" class="btn-reset">Limpiar</button>
-            <button type="submit" class="btn-submit">
-              Enviar solicitud →
-            </button>
-          </div>
+        <!-- Sección 1 -->
+        <div class="section-header">
+          <div class="section-num">1</div>
+          <div class="section-title">Datos del solicitante</div>
         </div>
 
-      </form>
-    </div>
+        <div class="form-grid">
 
+          <div class="field-group span-2">
+            <label for="{{ form.nombre_solicitante.id_for_label }}">{{ form.nombre_solicitante.label }}</label>
+            {{ form.nombre_solicitante }}
+            {% if form.nombre_solicitante.errors %}
+            <ul class="errorlist">{% for e in form.nombre_solicitante.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group">
+            <label for="{{ form.documento_identidad.id_for_label }}">{{ form.documento_identidad.label }}</label>
+            {{ form.documento_identidad }}
+            {% if form.documento_identidad.errors %}
+            <ul class="errorlist">{% for e in form.documento_identidad.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group">
+            <label for="{{ form.correo_electronico.id_for_label }}">{{ form.correo_electronico.label }}</label>
+            {{ form.correo_electronico }}
+            {% if form.correo_electronico.errors %}
+            <ul class="errorlist">{% for e in form.correo_electronico.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group">
+            <label for="{{ form.telefono_contacto.id_for_label }}">{{ form.telefono_contacto.label }}</label>
+            {{ form.telefono_contacto }}
+            {% if form.telefono_contacto.errors %}
+            <ul class="errorlist">{% for e in form.telefono_contacto.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group">
+            <label for="{{ form.fecha_solicitud.id_for_label }}">{{ form.fecha_solicitud.label }}</label>
+            {{ form.fecha_solicitud }}
+            {% if form.fecha_solicitud.errors %}
+            <ul class="errorlist">{% for e in form.fecha_solicitud.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+        </div>
+
+        <hr class="section-sep">
+
+        <!-- Sección 2 -->
+        <div class="section-header">
+          <div class="section-num">2</div>
+          <div class="section-title">Detalle de la solicitud</div>
+        </div>
+
+        <div class="form-grid">
+
+          <div class="field-group">
+            <label for="{{ form.tipo_solicitud.id_for_label }}">{{ form.tipo_solicitud.label }}</label>
+            {{ form.tipo_solicitud }}
+            {% if form.tipo_solicitud.errors %}
+            <ul class="errorlist">{% for e in form.tipo_solicitud.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group">
+            <label for="{{ form.asunto.id_for_label }}">{{ form.asunto.label }}</label>
+            {{ form.asunto }}
+            {% if form.asunto.errors %}
+            <ul class="errorlist">{% for e in form.asunto.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group span-2">
+            <label for="{{ form.descripcion_detallada.id_for_label }}">{{ form.descripcion_detallada.label }}</label>
+            {{ form.descripcion_detallada }}
+            {% if form.descripcion_detallada.errors %}
+            <ul class="errorlist">{% for e in form.descripcion_detallada.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group span-2">
+            <label for="{{ form.archivo_adjunto.id_for_label }}">
+              {{ form.archivo_adjunto.label }}
+              <span style="color:var(--text-muted);font-weight:400"> — PDF, DOC, IMG</span>
+            </label>
+            {{ form.archivo_adjunto }}
+            {% if form.archivo_adjunto.errors %}
+            <ul class="errorlist">{% for e in form.archivo_adjunto.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card-footer">
+        <span class="footer-hint">📋 * Todos los campos son obligatorios salvo el adjunto</span>
+        <div class="footer-actions">
+          <button type="reset" class="btn-reset">Limpiar</button>
+          <button type="submit" class="btn-submit">
+            Enviar solicitud <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+    </form>
   </div>
+
+</div>
 </body>
 </html>

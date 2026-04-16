@@ -34,4 +34,4 @@ class Solicitud(models.Model):
         ordering = ['-fecha_solicitud']
 
     def __str__(self):
-        return f"{self.nombre_solicitante} — {self.fecha_solicitud()} - ${self.archivo_adjunto}"
+        return f"{self.nombre_solicitante} — {self.fecha_solicitud} - ${self.archivo_adjunto}"
